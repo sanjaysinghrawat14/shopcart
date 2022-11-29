@@ -1,0 +1,26 @@
+<h2>Checkout</h2>
+<% # ENV['STRIPE_TEST_PUBLISHABLE_KEY'] %>
+
+<% # Rails.configuration.custom_config_key %>
+
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+            Add delivery address
+            </div>
+            <div class="card-body">
+                <%= render "form" %>
+            </div>
+        </div>
+        <div id="comments" class="">
+            <%= render @addresses %>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <%= render "order_details"%>
+    </div>
+</div>
+
+

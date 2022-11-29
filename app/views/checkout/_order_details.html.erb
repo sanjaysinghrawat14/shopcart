@@ -1,0 +1,13 @@
+
+<div class="col-md-6 pull-right">
+    <div class=" mt-2 items-start p-4  bg-light rounded">
+       <h5>Order Summary</h5>
+        <hr></hr>
+        <p>Order total:   <%= number_to_currency(@cart.total_price) %></p>       
+        
+       
+      <%  if total_cart_items %>
+        <p> <%= cart_count_over_one %> items in cart</p> 
+      <% end %>
+    </div>
+</div>

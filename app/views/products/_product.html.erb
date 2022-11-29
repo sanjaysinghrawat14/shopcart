@@ -1,0 +1,38 @@
+
+
+  
+   
+        <tr class="js-table-row" tabindex="0" role="link" data-url="/admin/products/5">
+            <td class="cell-data cell-data--number">
+            <%= product.id %>
+            </td>
+            <td class="cell-data cell-data--string">
+            <%= product.brand %>
+            </td>
+            <td class="cell-data cell-data--string">
+            <%= product.model %>
+            </td>
+            <td class="cell-data cell-data--string">
+            <%= product.description %>
+            </td>
+            <td class="cell-data cell-data--string">
+            <%= product.finish %>
+            </td>
+            <td class="cell-data cell-data--string">
+            <%= product.title %>
+            </td>
+
+            <td class="cell-data cell-data--string">
+            <i> <% if product.categories.any? %>
+            <div class="mt-2"><%= render product.categories %></div>
+            <% end %></i>
+            </td>
+            <td class="cell-data cell-data--number">
+                <a href="/admin/products/5" tabindex="-1" class="action-show">
+                <%= product.price %>
+                </a>
+            </td>
+            <td><%= link_to "Edit" , edit_admin_product_path(product) , class: "action-edit" %></td>
+            <td> <%= button_to "delete", admin_product_path(product), method: :delete ,  class: "text-color-red" %> </td>
+  
+        </tr>

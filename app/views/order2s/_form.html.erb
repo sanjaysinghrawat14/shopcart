@@ -1,0 +1,50 @@
+
+
+
+<%= form_with(model: order2) do |f| %>
+  <% if order2.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(order2.errors.count, "error") %> prohibited this order2 from being saved:</h2>
+      <ul>
+        <% order2.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+    <% if order2.express_token.blank? %>
+    <p>
+      <%= f.label :first_name %><br />
+      <%= f.text_field :first_name %>
+    </p>
+    <p>
+      <%= f.label :last_name %><br />
+      <%= f.text_field :last_name %>
+    </p>
+    <p>
+      <%= f.label :card_type %><br />
+      <%= f.select :card_type, [["Visa", "visa"], ["MasterCard", "master"], ["Discover", "discover"], ["American Express", "american_express"]] %>
+    </p>
+    <p>
+      <%= f.label :card_number %><br />
+      <%= f.text_field :card_number %>
+    </p>
+    <p>
+      <%= f.label :card_verification, "Card Verification Value (CVV)" %><br />
+      <%= f.text_field :card_verification %>
+    </p>
+    <p>
+      <%= f.label :card_expires_on %><br />
+      <%= f.date_select :card_expires_on, :discard_day => true, :start_year => Date.today.year, :end_year => (Date.today.year+10), :add_month_numbers => true %>
+    </p>
+    <% else %>
+
+    <%= f.hidden_field :express_token%>
+    <p>First Name:   <%=order2.first_name %>    </p>
+    <p>Last Name:   <%=order2.last_name %>    </p>
+
+    <% end %>
+    <p><%= f.submit "Submit" %></p>
+
+<% end %>

@@ -1,0 +1,111 @@
+
+<header class="main-content__header" role="banner">
+  <h1 class="main-content__page-title" id="page-title">
+    Categories
+  </h1>
+  <%=
+  render("index_header",
+    resources: @categories,
+    search_term: search_term,
+    page: 1,
+    show_search_bar: true,
+  )
+  %>
+    
+  <div>
+  <%= link_to "New category" ,new_admin_category_path ,class: "button"%>
+  </div>
+</header>
+
+
+
+
+<section class="main-content__body main-content__body--flush">
+  
+<table aria-labelledby="page-title">
+  <thead>
+  <tr>
+  <th class="cell-label
+  cell-label--number
+  cell-label--false
+  cell-label--category_id" scope="col" role="columnheader" aria-sort="none">
+  <a href="/admin/categories?category%5Bdirection%5D=asc&amp;category%5Border%5D=id">
+  Id
+</a>        </th>
+  <th class="cell-label
+  cell-label--string
+  cell-label--false
+  cell-label--category_name" scope="col" role="columnheader" aria-sort="none">
+  <a href="/admin/categories?category%5Bdirection%5D=asc&amp;category%5Border%5D=name">
+  Name
+</a>        </th>
+  <th class="cell-label
+  cell-label--text
+  cell-label--false
+  cell-label--category_short_description" scope="col" role="columnheader" aria-sort="none">
+  <a href="/admin/categories?category%5Bdirection%5D=asc&amp;category%5Border%5D=short_description">
+  Short Description
+</a>        </th>
+  <th class="cell-label
+  cell-label--text
+  cell-label--false
+  cell-label--category_long_description" scope="col" role="columnheader" aria-sort="none">
+  <a href="/admin/categories?category%5Bdirection%5D=asc&amp;category%5Border%5D=long_description">
+  Long Description
+</a>        </th>
+  <th class="cell-label
+  cell-label--date
+  cell-label--false
+  cell-label--category_dat_upto" scope="col" role="columnheader" aria-sort="none">
+  <a href="/admin/categories?category%5Bdirection%5D=asc&amp;category%5Border%5D=dat_upto">
+  Dat Upto
+</a>        </th>
+  <th class="cell-label
+  cell-label--number
+  cell-label--false
+  cell-label--category_parent_id" scope="col" role="columnheader" aria-sort="none">
+  <a href="/admin/categories?category%5Bdirection%5D=asc&amp;category%5Border%5D=parent_id">
+  Parent
+</a>        </th>
+  <th scope="col"></th>
+<th scope="col"></th>
+
+</tr>
+</thead>
+  <tbody>
+  <% @categories.each do |category| %>
+    <tr class="js-table-row" tabindex="0" role="link" data-url="/admin/categorys/5">
+    <td class="cell-data cell-data--number">
+    <%= category.id %>
+    </td>
+    <td class="cell-data cell-data--string">
+    <%= category.name %>
+    </td>
+    <td class="cell-data cell-data--string">
+    <%= category.short_description %>
+    </td>
+    <td class="cell-data cell-data--string">
+    <% # category.description.to_plain_text.truncate(70)  %>
+    <%= category.long_description  %>
+
+    </td>
+    <td class="cell-data cell-data--string">
+    <%=  category.dat_upto.blank? ?  '--' :   category.dat_upto.strftime("%d/%m/%Y") %>
+    </td>
+    <td class="cell-data cell-data--string">
+    <%=  category.parent_category.blank? ?  '--' :  category.parent_category.name  %>
+
+    </td>
+
+    <td><%= link_to "Edit" , edit_admin_category_path(category) , class: "button action-edit text-color-yellow" %></td>
+    <td> <%= button_to "delete", admin_category_path(category), method: :delete ,  form: {data: {turbo_confirm: 'Are you sure?'}}, class: "text-color-red" %> </td>
+
+</tr>
+
+
+
+  <% end %>
+  </tbody>
+  </table>
+  </section>
+

@@ -1,0 +1,50 @@
+
+
+<div class="row">
+
+  <div class="col-md-3">
+    <figure class="is-128x128 image">
+    <%= image_tag(cart_item.product.image.url, size: "128x128")  %>
+
+    </figure>
+  </div>
+  <div class="col-md-9">
+  <strong><%= cart_item.product.title %></strong>
+    <div class="columns align-items-center">
+      <div class="row">
+          <div class="content col-md-5">
+            <%= cart_item.product.description %>
+          </div>
+          <div class="content col-md-2">
+          <%= number_to_currency(cart_item.product.price) %>
+          </div>
+          <div class="content col-md-2">
+              <%= form_with(model: cart_item) do |form| %>
+                <div class="", id="<%= cart_item.product.id%>">
+                    <%= form.number_field :quantity ,id: "cart_item_quantity_#{cart_item.product.id}", class: "cart_item_quantity", prev_val: "#{cart_item.quantity}" %>
+                    <span id="<%= "error-#{cart_item.product.id}" %>"></spn>
+                </div>
+              <% end %>
+          </div>
+
+          <div class="col-md-3 has-text-right">
+            <strong class="f4 sub-total", id="<%= "product-#{cart_item.product.id}" %>"><%= number_to_currency(cart_item.product.price * cart_item.quantity) %></strong>
+            <div class="has-text-right">
+            
+              <%= button_to 'Remove Cart',cart_item, method: :delete, form: {data: { turbo_confirm: "Are you sure? " }}, class: "btn btn-danger mb-4" %>
+            </div>
+          </div>
+      </div>
+    </div>
+  </div>
+</div>
+<hr/ >
+
+<style>
+.cart_item_quantity {
+
+  width:45px !important;
+}
+</style>
+
+

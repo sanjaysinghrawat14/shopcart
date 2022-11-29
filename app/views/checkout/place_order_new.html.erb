@@ -1,0 +1,103 @@
+<h2>Payment</h2>
+<div class="row">
+    <div class="col-md-6">
+        <hr></hr>
+
+        <input type="radio" class="payment" id="cash-on-delivery-payment" name="fav_language" value="HTML">
+        <label for="html">Cash On delivery</label><br/>
+        <div class="sub-data mt-2 items-start p-4  bg-light rounded" id="cash-on-delivery">
+            <div class="mb-2">
+                <strong>Addres Details:</strong>
+                <%= @address.address %>
+            </div> 
+            <%= form_with model:  @address ,url: place_order_path ,method: :POST do |f| %>
+            <%= f.submit "Place Order"  ,class: "btn btn-sm btn-warning" %>
+            <% end %>
+        </div>
+        <hr></hr>
+
+        <input type="radio" class="payment" id="credit-debit-card-payment" name="fav_language" value="CSS">
+        <label for="css"> Credit/Debit Card</label><br/>
+        <div class="sub-data mt-2 items-start p-4  bg-light rounded" id="credit-debit-card">
+            <div>
+                <strong>Addres Details:</strong>
+                <%= @address.address %>
+            </div>
+            <%= form_with model:  @address ,url: place_order_path, method: :POST, class: "meeting-form" do |f| %>
+            <%= render "checkout/payment_form" %>
+            <%= f.submit "Place Order"  ,class: "btn btn-sm btn-warning" %>
+            <% end %>
+        </div>
+        <hr></hr>
+
+
+        <input type="radio" class="payment" id="std-paypal-payment" name="fav_language" value="CSS">
+        <label for="css"> Standard Paypal</label><br/>
+        <div class="sub-data mt-2 items-start p-4  bg-light rounded" id="std-paypal">
+            <div class="mb-2">
+                <strong>Addres Details:</strong>
+                <%= @address.address %>
+            </div>
+            <%= link_to "Standard Paypal checkout", new_order2_path, class: "btn btn-warning" %> <br/>
+
+        </div>
+        <hr></hr>
+
+        <input type="radio" class="payment" id="exp-paypal-payment" name="fav_language" value="CSS">
+        <label for="css"> Express Paypal</label><br/>
+        <div class="sub-data mt-2 items-start p-4  bg-light rounded" id="exp-paypal">
+            <div class="mb-2">
+                <strong>Addres Details:</strong>
+                <%= @address.address %>
+            </div>
+            <%= link_to image_tag("https://www.paypal.com/en_US/i/btn/btn_xpressCheckout.gif"), express_path %>
+
+        </div>
+        <hr></hr>
+
+
+
+           <% # this is for direct go to paypal login page%>
+          <% #= link_to "Checkout-paypal", @cart.paypal_url(place_order_path, payment_notifications_path) %>
+          <%= form_tag "https://www.sandbox.paypal.com/cgi-bin/webscr" do %>
+            <%= hidden_field_tag :cmd, "_s-xclick" %>
+            <%= hidden_field_tag :encrypted, @cart.paypal_url(place_order_path, payment_notifications_path ) %>
+            <p><% submit_tag "Checkout" %></p>
+          <% end %>
+
+
+
+    </div>
+
+    <div class="col-md-6">
+      <%= render "order_details"%>
+    </div>
+</div>
+
+
+
+
+
+
+
+<style>
+   .sub-data{
+   padding-left: 20px;
+}
+
+</style>
+
+
+<script>
+$(".sub-data").hide();
+
+$(".payment").click(function(){
+    id = $(this).attr('id');
+    data =  id.split('-');
+    data.pop();
+    id = data.join('-');
+    $("#"+id).show();
+    $('.sub-data').not('#' + id).hide();
+});
+
+</script>

@@ -1,0 +1,130 @@
+
+<%= form_with(model: @product, url:  (@product.id.blank? ? admin_products_path  : admin_product_path(@product)),class: " p-3 mb-3 rounded", local: true) do |f| %>
+  <%= render 'admin/shared/errors' %>
+<%#  form_with(model: @product, url:  admin_products_path,class: "shadow p-3 mb-3 bg-success rounded", local: true) do |f| %>
+
+    <div class="field-unit field-unit--string field-unit--optional">
+      <div class="field-unit__label">
+      <%= f.label :title, class: "col-2 col-form-label text-light" %>
+      </div>
+      <div class="field-unit__field">
+      <%= f.text_field :title,class: "form-control shadow rounded", placeholder: "Enter title" %>
+      </div>
+    </div>
+
+
+    <div class="field-unit field-unit--string field-unit--optional">
+      <div class="field-unit__label">
+      <%= f.label :price, class: "col-2 col-form-label text-light" %>
+      </div>
+      <div class="field-unit__field">
+      <%= f.number_field :price,class: "form-control shadow rounded" %>
+      </div>
+    </div>
+
+    <div class="field-unit field-unit--string field-unit--optional">
+      <div class="field-unit__label">
+      <%= f.label :quantity, class: "col-2 col-form-label text-light" %>
+      </div>
+      <div class="field-unit__field">
+      <%= f.number_field :quantity,class: "form-control shadow rounded" %>
+      </div>
+    </div>
+
+
+  <div class="field-unit field-unit--string field-unit--optional">
+  <div class="field-unit__label">
+  <%= f.label :model, class: "col-2 col-form-label text-light" %>
+  </div>
+  <div class="field-unit__field">
+  <%= f.text_field :model,class: "form-control shadow rounded", placeholder: "Enter model" %>
+  </div>
+</div>
+
+<div class="field-unit field-unit--string field-unit--optional">
+  <div class="field-unit__label">
+  <%= f.label :description,class: "col-2 col-form-label text-light" %>
+  </div>
+  <div class="field-unit__field">
+  <%= f.rich_text_area :description, class: "input h-32 border border-grey-light resize-none", placeholder: "Enter description" %>
+  <% #  f.rich_text_area :description, input: "product_description", id: "product_description_trix" %>
+  </div>
+</div>
+<div class="field-unit field-unit--string field-unit--optional">
+<div class="field-unit__label">
+
+<%= f.label :category, class: "col-2 col-form-label text-light"  %>
+</div>
+<div class="field-unit__field">
+<%= f.collection_select :category_ids, Category.order(:name), :id, :name, 
+{prompt: "Please Select category"}, {multiple: true, size:4,class: "form-select shadow rounded"} %>
+</div> 
+</div>  
+
+<div class="field-unit field-unit--string field-unit--optional">
+  <div class="field-unit__label">
+  <%= f.label :brand,class: "col-2 col-form-label text-light" %>
+  </div>
+  <div class="field-unit__field">
+  <%= f.text_field :brand,class: "form-control shadow rounded", placeholder: "Enter brand" %>
+
+  </div>
+</div>
+
+<div class="field-unit field-unit--string field-unit--optional">
+  <div class="field-unit__label">
+  <%= f.label :finish,class: "col-2 col-form-label text-light" %>
+  </div>
+  <div class="field-unit__field">
+  <% # f.select :finish, options_for_select(Product::FINISH), class: "form-control shadow rounded"%>
+  <%= f.select :finish, options_for_select(Product::FINISH) %>
+
+  </div>
+</div>
+
+
+<div class="field-unit field-unit--string field-unit--optional">
+  <div class="field-unit__label">
+  <%= f.label :condition,class: "col-2 col-form-label text-light" %>
+  </div>
+  <div class="field-unit__field">
+  <%= f.select :condition, options_for_select(Product::CONDITION) %>
+
+  </div>
+</div>
+
+
+<div class="field-unit field-unit--string field-unit--optional">
+  <div class="field-unit__label">
+  <%= f.label :image,class: "col-2 col-form-label text-light" %>
+  </div>
+  <div class="field-unit__field">
+  <%= f.file_field :image,class: "form-control shadow rounded product-image", placeholder: "Enter category name" %>
+ 
+  </div>
+</div>
+  <div class="field-unit field-unit--string field-unit--optional image-preview">  
+  <output id="list"></output>
+  </div>
+<% if @product.image.url %>
+<div class="feature-image image-preview" id="edit-img">
+<%= link_to image_tag(@product.image.url, size: "200x200" ) %>
+</div>
+<%end%>
+
+<div class="form-actions">
+      <%= f.submit  class: "btn btn-outline-light" %> 
+  </div>
+<% end %>
+
+<style>
+
+.image-preview{
+padding-left: 18%;
+
+}
+</style>
+
+
+
+

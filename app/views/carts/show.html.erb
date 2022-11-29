@@ -1,0 +1,69 @@
+<div class="row keep-shopping pv1 mt-4 ">
+  <div class="col-md-6">
+    <h2>Shopping Cart</h2>
+  </div>
+  <div class="col-md-6">
+  <div class="pull-right">
+  <%= link_to 'Keep Shopping', products_path, class: 'btn btn-info' %>
+  </div>
+  </div>
+</div>
+
+<br/>
+<hr />
+<% # star_images%>
+<% #= render_stars(@cart) %>
+
+
+<div class="section">
+
+
+<div class="row">
+        <div class="col-md-3">
+        <p><strong>Item</strong></p>
+        </div>
+          <div class="col-md-9">
+                    
+                  <div class="columns align-items-center">
+                          <div class="row">
+                              <div class="content col-md-5">
+                              <p><strong>Product Description</strong></p>
+                              </div>
+                              <div class="content col-md-2">
+                              <p><strong>Price</strong></p>
+                              </div>
+                              <div class="content col-md-2">
+                              <p><strong>Quantity</strong></p>
+                              </div>
+
+                              <div class="col-md-3 has-text-right">
+                              <p><strong>Subtotal</strong></p>
+                              </div>
+
+                          </div>
+                  </div>
+          </div>
+  </div>
+<hr/ >
+
+
+
+<% count = 0%>
+  <%= render(@cart.cart_items, count: count) %>
+
+  <div class="row">
+    <div class="col-md-10">
+      <%= button_to 'Empty Cart', @cart, method: :delete, form: {data: { turbo_confirm: "Are you sure? " }}, class: "btn btn-danger" %>
+        <div class="column total has-text-right">
+          <h4 class="  title is-4">
+            <span class="f5 has-text-grey">Total:</span>
+            <span class="total-price"> <%= number_to_currency(@cart.total_price) %></span>
+          </h4>
+        </div>
+    </div>
+
+    <div class="col-md-2">
+    <%= link_to 'Move to Checkout', checkout_path,  class: "btn btn-warning" %>
+    </div>
+
+</div>

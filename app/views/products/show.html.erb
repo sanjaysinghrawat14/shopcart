@@ -1,0 +1,172 @@
+<% say_something = -> { "This is a lambda" } %>
+<% times_two = ->(x) { x * 2 }%>
+<%=  times_two.call(10)%>
+
+<%= say_something.call %>
+<br/>
+
+
+
+
+
+<% t = Proc.new { |x,y|  "I don't care about arguments!" } %>
+<%= t.call %>
+
+<p style="color: green"><%= notice %></p>
+
+<% content_for :body_class, 'bg-light' %>
+<div class="section product-show mt-3 mb-5">
+  <div class="row">
+    <div class="col-md-8">
+         <h2 class="title is-2"><%= @product.title %></h2>
+           <div>
+                <% if @product.brand? %>
+                <span class="top inline-block pr-3"><%= @product.brand %></span>
+                <% end %>
+
+                <span class="top inline-block pr-3"><%= @product.model %></span>
+
+                <% if @product.condition? %>
+                <span class="top inline-block pr-3"><%= @product.condition %></span>
+                <% end %>
+            </div>
+        <div class="feature-image rounded">
+            <%= link_to image_tag(@product.image.url, size: "500x350" ) %>
+        </div>
+
+        <div class="content rounded mt-3 bg-white mb-5">
+            <h3 class="subtitle is-4">Description</h3>
+            <%= @product.description %>
+            <h3 class="subtitle is-4 pt5">Product Specs</h3>
+            <table class="table is-narrow mt-5">
+                <% if @product.condition %>
+                <tr>
+                <td class="has-text-weight-bold">Condition:</td>
+                <td><%= @product.condition %></td>
+                </tr>
+                <% end %>
+                <% if @product.finish %>
+                <tr>
+                    <td class="has-text-weight-bold">Finish:</td>
+                    <td><%= @product.finish %></td>
+                </tr>
+                <% end %>
+                <% if @product.brand %>
+                <tr>
+                    <td class="has-text-weight-bold">Brand:</td>
+                    <td><%= @product.brand %></td>
+                </tr>
+                <% end %>
+
+                <tr>
+                <td class="has-text-weight-bold">Model:</td>
+                <td><%= @product.model %></td>
+                </tr>
+            </table>
+           
+            <% unless @user_feed_back_data.blank? %>
+            <div class="row">
+                <div class="col-md-4">
+                    <label><h2>Rating </h2></label>
+                </div>
+                <div class="col-md-4 mt-3">
+                    <%= pluralize(@user_feed_back_data.count, 'Review') %>
+                </div>
+                <div class="col-md-4 mt-3" id="hulk">
+                    <%= link_to 'Add your review', '#' %>
+                </div>
+            </div>
+            <div>
+            <label>Average Rating: </label>
+            <% average_rating(@user_feed_back_data).times do |n| %>
+                <%= image_tag (asset_url('star-on.png')), class: "img-responsive" , size: "20x20" %>
+            <%  end %>
+            <hr></hr>
+
+            </div>
+                <% @user_feed_back_data.each do |x|  %>
+                    <% x.rating.times do |n| %>
+                        <%= image_tag (asset_url('star-on.png')), class: "img-responsive" , size: "20x20" %>
+                    <%  end %>
+                    <p>Given by: <strong><%= x.user.name%></strong> </p>
+                   
+                <%  end %>
+            <%  end %>
+        </div>
+
+ 
+        <div class="content rounded mt-3 bg-white mb-5">
+         <h3 class="subtitle is-4">Add Rating</h3>
+            <%= render "user_feedbacks/form", user_feed_backs: @user_feed_backs %>
+        </div>
+
+    </div>
+
+   
+
+
+
+
+    <div class="col-md-3 round  text-center">
+        <div class="bg-white sideBox ">
+            <h4 class="title is-5 has-text-centered"><%= number_to_currency(@product.price) %></h4>
+            <p class="has-text-centered mb4">
+            <% # @product.user.name %>
+            </p>
+            <%= form_with(model: Product.new ,url: cart_items_path(product_id: @product.id), class: "mb-2") do |form| %>
+              <div class="test mb-2">
+                  <%=  form.label :quantity, 'Qty' %>
+                  <%=  form.number_field :quantity %>
+                  <p class='c-error'><%= show_errors(@cart_item, :quantity) %></p>
+
+              </div>
+              <%= form.button ("<i class='fa fa-cart-plus mr-2'></i> Add to cart").html_safe,  class: "btn bg-cart" %>
+              <% # form.submit 'Add to cart',  class: 'btn btn-info' %>
+            <% end %>
+            <% # button_to 'Add to cart', cart_items_path(product_id: @product.id), class: 'btn btn-info' %>
+        </div>
+    </div>
+  </div>
+</div>
+
+
+<style>
+.bg-cart {
+    background-color: orange;
+    color: #fff
+}
+
+.bg-cart:hover {
+    color: #fff
+}
+#product_quantity {
+    width: 40px;
+}
+.top{
+    padding-right: 20px;
+}
+.content{
+    padding: 30px;
+}
+.sideBox{
+    padding: 30px;
+
+}
+#hulk a{
+    decoration: none !important;
+}
+.c-error { 
+  border-radius: 0 !important;
+  position: relative; 
+  display: inline-block !important;
+  color: #c51244 !important;
+}
+
+</style>
+
+<script>
+
+$("#hulk").click(function() {
+  $("html, body").animate({ scrollTop: $(document).height() }, "fast");
+});
+</script>

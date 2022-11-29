@@ -1,0 +1,23 @@
+
+
+default: &default
+  adapter: mysql2
+  encoding: utf8mb4
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  username: root
+  password: root
+  host: localhost
+
+development:
+  <<: *default
+  database: shopcart_development
+
+test:
+  <<: *default
+  database: shopcart_test
+
+production:
+  <<: *default
+  database: shopcart_production
+  username: shopcart
+  password: <%= ENV["SHOPCART_DATABASE_PASSWORD"] %>

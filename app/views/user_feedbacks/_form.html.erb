@@ -1,0 +1,28 @@
+<%= form_with(model: user_feed_backs) do |form| %>
+
+  <div class="mt-2">
+    <%= form.label :rating, style: "display: block" %>
+    <%= form.number_field :rating, max: 5, min: 1 %>
+  </div>
+
+  <div>
+    <%= form.hidden_field :product_id , value: params['id'] %>
+  </div>
+
+  <div class="mt-2">
+    <%= form.label :comment, style: "display: block" %>
+    <%= form.text_area :comment %>
+  </div>
+
+  <div class="mt-2">
+    <%= form.submit "Aadd review", class: "btn btn-warning"%>
+  </div>
+<% end %>
+
+
+<script>
+$("#rating-form").raty({
+path: "/assets/",
+scoreName: "user_feed_back[rating]"
+});
+</script>

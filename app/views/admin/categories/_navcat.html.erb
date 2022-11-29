@@ -1,0 +1,84 @@
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light mb-0">
+  <div class="container container-fluid mb-0">
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+      <% Category.where(parent_id: nil).each do |category| %>
+          <li class="nav-item dropdown">
+            <%= link_to category.name, products_path(category_id:  category.id) , class: "nav-link dropdown-toggle my-drop",id: category.id ,role: "button" , data: { bs_toggle: "dropdown" } ,aria_expanded: "false" %>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                  <li> <%= link_to category.name, products_path(category_id:  category.id) ,class: "dropdown-item" %>
+                  </li>
+
+                 
+                  <div id="show-data2">
+                  <% if !(category.subcategories.blank?) %>
+                    <li><hr class="dropdown-divider"></li>
+                    <% category.subcategories.each do |menu_item|%>
+                        <li><%= link_to menu_item.name, products_path(category_id:  menu_item.id) , class: "dropdown-item"%></li>
+                    <% end %>
+                  <% end %>
+                  </div>
+              </ul>
+           
+          </li>
+        <% end %>
+      </ul>
+      <ul>
+      <%  if total_cart_items %>
+        <%= link_to cart_path(@cart), class:"navbar-item btn btn-warning" do %>
+          <span class="icon is-small">
+            <i class="fa fa-shopping-cart"></i>
+          </span>
+          <span>Cart
+            <%= cart_count_over_one %>
+          </span>
+        <% end %>
+      <% end %>
+    </ul>
+
+    </div>
+  </div>
+</nav>
+
+
+
+
+
+
+
+
+
+
+<style>
+.cat{
+    font-size: 15px;
+}
+</style>
+
+
+
+<script>
+
+$(document).ready(function(){
+    $('.my-drop').click(function() {
+     var categoryId
+     categoryId = $(this).attr("id")
+     
+     $.ajax({
+        url: "/subcategories", 
+        type: "GET",
+        data: {category_id:categoryId},
+        success: function(result){
+          $("#show-data").html(result)
+      }});
+     
+    });
+
+
+
+      
+   });
+
+
+</script>

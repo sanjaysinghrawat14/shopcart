@@ -1,0 +1,19 @@
+
+
+
+<%= form_with(model: @address, url: address_new_path, class: "", local: true)  do |f| %>
+
+
+
+  <div class= "form-group mb-3">
+    <%= f.label :address, class: "col-form-label" %>
+    <div class="">
+        <%= f.hidden_field :address,class: "form-control shadow rounded", placeholder: "Title of article" %>
+    <%=  f.rich_text_area :address  %>
+    </div>
+  </div>
+
+    <%= f.submit class: "btn btn-info" %>
+
+
+  <% end %>

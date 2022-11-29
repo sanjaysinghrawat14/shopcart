@@ -1,0 +1,14 @@
+<header class="main-content__header" role="banner">
+  <h1 class="main-content__page-title">
+  Edit Product 
+  </h1>
+
+  <div>
+  <%= link_to 'Back', admin_categories_path , class: "button btn btn-outline-light"%>
+  </div>
+</header>
+
+
+  <section class="main-content__body">
+    <%= render 'form', product: @category %>
+  </section>

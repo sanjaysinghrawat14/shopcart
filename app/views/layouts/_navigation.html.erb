@@ -1,0 +1,43 @@
+
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container container-fluid">
+        <%= link_to image_tag(asset_url('logo.jpg'), id: "img-logo"  ), root_path, class: "navbar-brand", id: "logo" %>
+         <% image_tag (asset_url('logo.jpg')), class: "img-responsive"%>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item">
+              <%= link_to('[The Weekend Has Arrived]', root_path, class: 'nav-link active') %>
+              </li>
+            </ul>
+            <ul class="nav navbar-right">
+           
+
+
+
+            <% if current_user %>
+                <li class="col-md-8 user-name">
+                <%= link_to ('<i class="fa fa-user"></i>  ' + truncate(current_user.email, length: 25)).html_safe, edit_user_registration_path, title: 'Edit Profile' %>
+                </li>
+                <li class="col-md-1"> </li>
+                <li class="col-md-3 logout">
+                <%= button_to "Logout" , destroy_user_session_path , method: :delete ,class: "nav-link btn btn-danger mr-2", id: "logoutbtn" %>
+                </li>
+                <% else %>
+                <li class="pull-right">
+                <%= link_to('Sign In', new_user_session_path, class: 'btn btn-primary', title: 'Sign In') %>
+                </li>
+                <li class="pull-right">
+                <%= link_to('Sign Up', new_user_registration_path, class: 'btn btn-primary', title: 'Sign Up') %>
+                </li>
+            <% end %>
+          </ul>
+
+
+           
+          </div>
+        </div>
+  </nav>
